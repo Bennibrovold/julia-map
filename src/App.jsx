@@ -9,7 +9,6 @@ import {
   CardContent,
   Typography,
   Grid,
-  Button,
   List,
   ListItem,
   ListItemText,
@@ -125,10 +124,10 @@ function App() {
                   mb: 2,
                 }}
               >
-                Медицинский туризм в Светлояровке
+                Краевая больница в Светлояровке
               </Typography>
               <Typography variant="h5" color="text.secondary">
-                Современные методы лечения и восстановления
+                Медицинские услуги и лечебные процедуры
               </Typography>
             </Box>
 
@@ -143,6 +142,233 @@ function App() {
                 </Map>
               </YMaps>
             </MapWrapper>
+            {/* Описание больницы */}
+            <Paper
+              elevation={0}
+              sx={{
+                mt: 8,
+                p: 0,
+                borderRadius: 3,
+                background: "transparent",
+                position: "relative",
+                overflow: "hidden",
+                "&:before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  width: "180px",
+                  height: "180px",
+                  background:
+                    "url(https://cdn-icons-png.flaticon.com/512/2781/2781812.png) no-repeat",
+                  backgroundSize: "contain",
+                  opacity: 0.1,
+                  transform: "translate(30px, -30px)",
+                },
+              }}
+            >
+              <Box sx={{ position: "relative", zIndex: 1 }}>
+                <Typography
+                  variant="h3"
+                  component="h2"
+                  sx={{
+                    fontWeight: 700,
+                    mb: 4,
+                    textAlign: "center",
+                    color: "#000000",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 2,
+                  }}
+                >
+                  <LocalHospital color="inherit" fontSize="large" />
+                  Отделение «Светлояровка»
+                </Typography>
+
+                <Grid container spacing={4}>
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{
+                        p: 4,
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontWeight: 600,
+                          mb: 3,
+                          color: "#00796b",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                        }}
+                      >
+                        <Spa color="inherit" /> Уникальное расположение
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        paragraph
+                        sx={{ fontSize: "1.1rem" }}
+                      >
+                        Отделение находится в живописной горно-таежной
+                        местности. Рядом расположена зона отдыха с
+                        водохранилищем и песчаным берегом, где можно посидеть с
+                        удочкой и насладиться природой.
+                      </Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: 2,
+                          mt: 3,
+                        }}
+                      >
+                        {[
+                          " Чистый горный воздух",
+                          "️ Обилие солнечного света",
+                          "️ Удаленность от городского шума",
+                          " Рыбалка в водохранилище",
+                          "‍♂️ Пешие прогулки по тайге",
+                        ].map((item, index) => (
+                          <Chip
+                            key={index}
+                            label={item}
+                            sx={{
+                              backgroundColor: "#e0f2f1",
+                              color: "#00796b",
+                              fontWeight: 500,
+                              fontSize: "0.95rem",
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{
+                        p: 4,
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
+                      }}
+                    >
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontWeight: 600,
+                          mb: 3,
+                          color: "#00796b",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1,
+                        }}
+                      >
+                        <MedicalServices color="inherit" /> Условия лечения
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        paragraph
+                        sx={{ fontSize: "1.1rem" }}
+                      >
+                        Больница расположена в трехэтажном корпусе и рассчитана
+                        на единовременное лечение и отдых 50 человек. Мы создали
+                        все условия для спокойного, неспешного отдыха от
+                        городской суеты.
+                      </Typography>
+                      <List sx={{ mt: 2 }}>
+                        {[
+                          " Современные палаты с комфортом",
+                          "️ 50 мест для пациентов",
+                          " Экологически чистая территория",
+                          "‍♀️ Атмосфера для полного расслабления",
+                          "️‍♂️ Комплексный подход к реабилитации",
+                        ].map((item, index) => (
+                          <ListItem
+                            key={index}
+                            sx={{
+                              p: 0,
+                              mb: 1,
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            <ListItemText
+                              primary={
+                                <Typography
+                                  variant="body1"
+                                  sx={{ fontSize: "1.1rem" }}
+                                >
+                                  {item}
+                                </Typography>
+                              }
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Box
+                  sx={{
+                    mt: 4,
+                    p: 4,
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    borderRadius: 2,
+                    boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: "#00796b",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <Healing color="inherit" /> Медицинская реабилитация
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    paragraph
+                    sx={{ fontSize: "1.1rem" }}
+                  >
+                    Отделение специализируется на медицинской реабилитации
+                    пациентов с заболеваниями опорно-двигательной системы и
+                    периферической нервной системы. На сегодняшний день мы
+                    используем самое современное физиотерапевтическое
+                    оборудование для скорейшего выздоровления наших пациентов.
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: 3,
+                    }}
+                  >
+                    <Chip
+                      label="Круглогодичное лечение в благоприятных условиях"
+                      sx={{
+                        backgroundColor: "#b2dfdb",
+                        color: "#00796b",
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        p: 2,
+                        height: "auto",
+                      }}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+            </Paper>
 
             {/* Услуги */}
             <Box sx={{ mt: 8 }}>
@@ -156,14 +382,23 @@ function App() {
                   color: "#333",
                 }}
               >
-                Наши медицинские услуги
+                Услуги больницы
               </Typography>
 
               <Grid container spacing={4}>
                 {servicesCategories.map((category, index) => (
-                  <Grid item xs={12} sm={6} md={6} key={index}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={6}
+                    key={index}
+                    sx={{ flexGrow: 1 }}
+                  >
                     <Card
                       sx={{
+                        width: "100%",
+                        flexGrow: 1,
                         height: "100%",
                         borderRadius: 3,
                         boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
@@ -196,6 +431,7 @@ function App() {
                               justifyContent: "center",
                               background: category.color,
                               mr: 2,
+                              color: "#fff",
                             }}
                           >
                             {category.icon}
@@ -244,23 +480,6 @@ function App() {
                           ))}
                         </List>
                       </CardContent>
-                      <Box sx={{ p: 2, textAlign: "center" }}>
-                        <Button
-                          variant="contained"
-                          size="medium"
-                          sx={{
-                            fontWeight: 600,
-                            borderRadius: 2,
-                            px: 4,
-                            background: category.color,
-                            "&:hover": {
-                              opacity: 0.9,
-                            },
-                          }}
-                        >
-                          Записаться
-                        </Button>
-                      </Box>
                     </Card>
                   </Grid>
                 ))}
@@ -272,9 +491,24 @@ function App() {
               elevation={0}
               sx={{
                 mt: 8,
-                p: 4,
+                p: 6,
                 borderRadius: 3,
-                background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+                background: "transparent",
+                position: "relative",
+                overflow: "hidden",
+                "&:before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  width: "120px",
+                  height: "120px",
+                  background:
+                    "url(https://cdn-icons-png.flaticon.com/512/206/206853.png) no-repeat",
+                  backgroundSize: "contain",
+                  opacity: 0.1,
+                  transform: "translate(30px, -30px)",
+                },
               }}
             >
               <Typography
@@ -282,64 +516,227 @@ function App() {
                 component="h2"
                 sx={{
                   fontWeight: 700,
-                  mb: 3,
+                  mb: 4,
                   textAlign: "center",
+                  color: "#000000",
+                  position: "relative",
+                  zIndex: 1,
                 }}
               >
-                Как записаться?
+                Как записаться в больницу?
               </Typography>
-              <Grid container spacing={3}>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 4,
+                  flexWrap: "nowrap",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
                 {[
-                  "Позвоните в санаторий",
-                  "Подготовьте документы (паспорт, полис)",
-                  "Приезжайте на лечение",
+                  {
+                    text: "Позвоните в регистратуру",
+                    icon: "📞",
+                    details: "Телефон: 8 (423-51) 2-05-61",
+                  },
+                  {
+                    text: "Подготовьте документы",
+                    icon: "📋",
+                    details: "(паспорт, полис, направление)",
+                  },
+                  {
+                    text: "Приезжайте на приём",
+                    icon: "🏥",
+                    details: "В назначенное время",
+                  },
                 ].map((step, index) => (
-                  <Grid item xs={12} md={4} key={index}>
+                  <Box
+                    key={index}
+                    sx={{
+                      p: 4,
+                      borderRadius: 2,
+                      backgroundColor: "white",
+                      textAlign: "center",
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 15px 30px rgba(0,0,0,0.15)",
+                      },
+                    }}
+                  >
                     <Box
                       sx={{
-                        p: 3,
-                        height: "100%",
-                        borderRadius: 2,
-                        backgroundColor: "white",
-                        boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
-                        textAlign: "center",
+                        width: 60,
+                        height: 60,
+                        borderRadius: "50%",
+                        backgroundColor: "#e3f2fd",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "24px",
+                        mb: 2,
+                        mx: "auto",
                       }}
                     >
-                      <Chip
-                        label={index + 1}
-                        color="primary"
-                        sx={{
-                          mb: 2,
-                          width: 40,
-                          height: 40,
-                          fontSize: "1.2rem",
-                          fontWeight: 700,
-                        }}
-                      />
-                      <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                        {step}
-                      </Typography>
+                      {step.icon}
                     </Box>
-                  </Grid>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontWeight: 600,
+                        mb: 1.5,
+                        color: "#000000",
+                      }}
+                    >
+                      {step.text}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "1.1rem",
+                      }}
+                    >
+                      {step.details}
+                    </Typography>
+                  </Box>
                 ))}
-              </Grid>
-              <Box sx={{ textAlign: "center", mt: 4 }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<LocalHospital />}
+              </Box>
+
+              <Box
+                sx={{
+                  mt: 4,
+                  textAlign: "center",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <Typography
+                  variant="h6"
                   sx={{
-                    fontWeight: 700,
-                    px: 5,
+                    display: "inline-block",
+                    backgroundColor: "#1976d2",
+                    color: "white",
+                    px: 3,
                     py: 1.5,
-                    fontSize: "1.1rem",
                     borderRadius: 2,
-                    background:
-                      "linear-gradient(45deg, #6a11cb 30%, #2575fc 90%)",
+                    fontWeight: 500,
                   }}
                 >
-                  Контакты для записи
-                </Button>
+                  Телефон регистратуры: 8 (423-51) 2-05-61
+                </Typography>
+              </Box>
+            </Paper>
+            {/* Лечение заболеваний */}
+            <Paper
+              elevation={0}
+              sx={{
+                mt: 8,
+                p: 6,
+                borderRadius: 3,
+                background: "transparent",
+                position: "relative",
+                overflow: "hidden",
+                "&:before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  width: "150px",
+                  height: "150px",
+                  background:
+                    "url(https://cdn-icons-png.flaticon.com/512/2965/2965878.png) no-repeat",
+                  backgroundSize: "contain",
+                  opacity: 0.1,
+                  transform: "translate(30px, -30px)",
+                },
+              }}
+            >
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{
+                  fontWeight: 700,
+                  mb: 4,
+                  textAlign: "center",
+                  color: "#000000",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                Лечение заболеваний
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: 4,
+                  alignItems: "center",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    flex: 1,
+                    p: 4,
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    borderRadius: 2,
+                    boxShadow: "0 4px 12px rgba(21, 101, 192, 0.1)",
+                  }}
+                >
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: "#000000",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <MedicalServices sx={{ color: "#ff0707" }} /> Комплексное
+                    восстановительное лечение
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    paragraph
+                    sx={{ fontSize: "1.1rem" }}
+                  >
+                    Больница проводит комплексное восстановительное лечение
+                    пациентов с:
+                  </Typography>
+                  <List sx={{ listStyleType: "disc", pl: 4 }}>
+                    {[
+                      "Остеохондрозом различных отделов позвоночника",
+                      "Артрозами крупных суставов",
+                      "Заболеваниями периферической нервной системы",
+                      "Заболеваниями сердечно-сосудистой системы в компенсированной форме",
+                      "Последствиями травм опорно-двигательного аппарата",
+                      "Хроническими болевыми синдромами",
+                    ].map((item, index) => (
+                      <ListItem
+                        key={index}
+                        sx={{
+                          display: "list-item",
+                          p: 0,
+                          mb: 1,
+                          "&::marker": { color: "#1976d2" },
+                        }}
+                      >
+                        <Typography variant="body1" sx={{ fontSize: "1.1rem" }}>
+                          {item}
+                        </Typography>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
               </Box>
             </Paper>
           </MuiContainer>
@@ -356,6 +753,7 @@ const Wrapper = styled.div`
   .ymaps-2-1-79-map {
     height: 800px;
     border-radius: 16px;
+    overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
 `;
