@@ -28,22 +28,12 @@ const PopupContent = () => {
   );
 };
 
-export const marker = {
-  id: 1,
-  coordinates: [44.169335, 132.538051] as [number, number],
-  name: "Краевая больница",
-};
-
-export const PopupWithImages = () => {
+export const PopupWithImages = ({ marker }) => {
   const [activeMarker, setActiveMarker] = useState<boolean | null>(null);
   const [popupPosition, setPopupPosition] = useState<[number, number] | null>(
     null
   );
-  const handleMarkerClick = (id: number, coordinates: [number, number]) => {
-    setPopupPosition(coordinates);
-  };
 
-  console.log(popupPosition);
   return (
     <>
       <Placemark
@@ -52,31 +42,11 @@ export const PopupWithImages = () => {
         properties={{
           balloonContent: renderToString(<PopupContent />),
         }}
-        modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
         options={{
           preset: "islands#redMedicalIcon",
           hideIconOnBalloonOpen: false,
         }}
       />
-
-      {/* {activeMarker && (
-        <Placemark
-          geometry={popupPosition}
-          modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
-          properties={{
-            iconContent: "",
-            hintContent: <PopupContent onClose={() => setActiveMarker(null)} />,
-          }}
-          options={{
-            hintOffset: [30, 0], // Сдвигаем попап вправо от маркера
-            hideIconOnBalloonOpen: false,
-            openHintOnHover: false,
-            openEmptyHint: true,
-            hasHint: true,
-            interactivityModel: "default#opaque",
-          }}
-        />
-      )} */}
     </>
   );
 };

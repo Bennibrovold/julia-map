@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import { styled } from "styled-components";
-import { PopupWithImages } from "./popup-with-buttons";
+import { PopupWithImages } from "../../popup-with-buttons";
 import {
   Card,
   CardContent,
@@ -33,6 +33,8 @@ import {
   Vaccines,
   SelfImprovement,
 } from "@mui/icons-material";
+import React from "react";
+import { Description } from "./description";
 
 // Фикс для иконок маркеров
 delete L.Icon.Default.prototype._getIconUrl;
@@ -44,23 +46,21 @@ L.Icon.Default.mergeOptions({
 });
 
 // Иконки для каждой услуги
-const serviceIcons = {
+const SERVICE_ICONS = {
   Электролечение: <ElectricBolt fontSize="small" />,
   Светолечение: <LightMode fontSize="small" />,
   Ультразвук: <Waves fontSize="small" />,
   Лазеротерапия: <MedicalInformation fontSize="small" />,
   Ингаляции: <Air fontSize="small" />,
   Водолечение: <WaterDrop fontSize="small" />,
-  Грязелечение: <Spa fontSize="small" />,
-  "Парафиновые аппликации": <Vaccines fontSize="small" />,
   "Медицинский массаж": <SelfImprovement fontSize="small" />,
+  "Ультразвуковая диагностика": <MedicalServices fontSize="small" />,
   "Кислородный коктейль": <Healing fontSize="small" />,
-  Баротерапия: <LocalHospital fontSize="small" />,
   "Лечебная физкультура": <FitnessCenter fontSize="small" />,
-  Фитотерапия: <MedicalServices fontSize="small" />,
+  "Суховоздушная ванна": <Spa fontSize="small" />,
 };
 
-const servicesCategories = [
+const SERVICES = [
   {
     title: "Физиолечение",
     icon: <MedicalServices sx={{ fontSize: 30 }} />,
@@ -70,39 +70,35 @@ const servicesCategories = [
       "Ультразвук",
       "Лазеротерапия",
       "Ингаляции",
-      "Водолечение (душ Шарко, подводный душ-массаж, циркулярный душ, ванны)",
+      "Водолечение (ванны с лечебными составами из Сибири)",
     ],
-    color: "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
+    color: "linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%)",
   },
   {
-    title: "Грязелечение",
-    icon: <Spa sx={{ fontSize: 30 }} />,
-    services: ["Аппликации грязи", "Гальваногрязь", "Парафиновые аппликации"],
-    color: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
-  },
-  {
-    title: "Массаж и терапия",
-    icon: <Healing sx={{ fontSize: 30 }} />,
-    services: ["Медицинский массаж", "Кислородный коктейль"],
-    color: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
-  },
-  {
-    title: "Специальные процедуры",
+    title: "Другие услуги",
     icon: <LocalHospital sx={{ fontSize: 30 }} />,
     services: [
-      "Баротерапия (гипербарическая оксигенация)",
-      "Лечебная физкультура",
-      "Фитотерапия",
+      "Медицинский массаж",
+      "Ультразвуковая диагностика",
+      "Кислородный коктейль",
+      "Кабинет лечебной физкультуры",
+      "Суховоздушная ванна в гипертермальном помещении (сауна)",
     ],
-    color: "linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)",
+    color: "linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)",
   },
 ];
 
-function App() {
+function Evgenevskoe() {
   const defaultState = {
-    center: [44.182364, 132.498276],
+    center: [43.57579609151811, 134.65430745727997],
     zoom: 13,
     controls: ["zoomControl", "fullscreenControl"],
+  };
+
+  const marker = {
+    id: 1,
+    coordinates: [43.576225, 134.653787] as [number, number],
+    name: "Краевая больница",
   };
 
   return (
@@ -124,13 +120,13 @@ function App() {
                   mb: 2,
                 }}
               >
-                Краевая больница в Светлояровке
+                Краевая больница Евгеньевская
               </Typography>
               <Typography variant="h5" color="text.secondary">
-                Медицинские услуги и лечебные процедуры
+                692456, Приморский край, Ольгинский район, село Щербаковка,
+                улица Таежная, влд. 4.
               </Typography>
             </Box>
-
             {/* Карта */}
             <MapWrapper>
               <YMaps query={{ apikey: "d24a41ba-dfc0-435a-acd9-37eb781c1721" }}>
@@ -138,238 +134,12 @@ function App() {
                   defaultState={defaultState}
                   modules={["control.ZoomControl", "control.FullscreenControl"]}
                 >
-                  <PopupWithImages />
+                  <PopupWithImages marker={marker} />
                 </Map>
               </YMaps>
             </MapWrapper>
             {/* Описание больницы */}
-            <Paper
-              elevation={0}
-              sx={{
-                mt: 8,
-                p: 0,
-                borderRadius: 3,
-                background: "transparent",
-                position: "relative",
-                overflow: "hidden",
-                "&:before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  width: "180px",
-                  height: "180px",
-                  background:
-                    "url(https://cdn-icons-png.flaticon.com/512/2781/2781812.png) no-repeat",
-                  backgroundSize: "contain",
-                  opacity: 0.1,
-                  transform: "translate(30px, -30px)",
-                },
-              }}
-            >
-              <Box sx={{ position: "relative", zIndex: 1 }}>
-                <Typography
-                  variant="h3"
-                  component="h2"
-                  sx={{
-                    fontWeight: 700,
-                    mb: 4,
-                    textAlign: "center",
-                    color: "#000000",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 2,
-                  }}
-                >
-                  <LocalHospital color="inherit" fontSize="large" />
-                  Отделение «Светлояровка»
-                </Typography>
-
-                <Grid container spacing={4}>
-                  <Grid item xs={12} md={6}>
-                    <Box
-                      sx={{
-                        p: 4,
-                        backgroundColor: "rgba(255, 255, 255, 0.85)",
-                        borderRadius: 2,
-                        boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
-                      }}
-                    >
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 600,
-                          mb: 3,
-                          color: "#00796b",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                        }}
-                      >
-                        <Spa color="inherit" /> Уникальное расположение
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        paragraph
-                        sx={{ fontSize: "1.1rem" }}
-                      >
-                        Отделение находится в живописной горно-таежной
-                        местности. Рядом расположена зона отдыха с
-                        водохранилищем и песчаным берегом, где можно посидеть с
-                        удочкой и насладиться природой.
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: 2,
-                          mt: 3,
-                        }}
-                      >
-                        {[
-                          " Чистый горный воздух",
-                          "️ Обилие солнечного света",
-                          "️ Удаленность от городского шума",
-                          " Рыбалка в водохранилище",
-                          "‍♂️ Пешие прогулки по тайге",
-                        ].map((item, index) => (
-                          <Chip
-                            key={index}
-                            label={item}
-                            sx={{
-                              backgroundColor: "#e0f2f1",
-                              color: "#00796b",
-                              fontWeight: 500,
-                              fontSize: "0.95rem",
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    </Box>
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <Box
-                      sx={{
-                        p: 4,
-                        backgroundColor: "rgba(255, 255, 255, 0.85)",
-                        borderRadius: 2,
-                        boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
-                      }}
-                    >
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 600,
-                          mb: 3,
-                          color: "#00796b",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 1,
-                        }}
-                      >
-                        <MedicalServices color="inherit" /> Условия лечения
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        paragraph
-                        sx={{ fontSize: "1.1rem" }}
-                      >
-                        Больница расположена в трехэтажном корпусе и рассчитана
-                        на единовременное лечение и отдых 50 человек. Мы создали
-                        все условия для спокойного, неспешного отдыха от
-                        городской суеты.
-                      </Typography>
-                      <List sx={{ mt: 2 }}>
-                        {[
-                          " Современные палаты с комфортом",
-                          "️ 50 мест для пациентов",
-                          " Экологически чистая территория",
-                          "‍♀️ Атмосфера для полного расслабления",
-                          "️‍♂️ Комплексный подход к реабилитации",
-                        ].map((item, index) => (
-                          <ListItem
-                            key={index}
-                            sx={{
-                              p: 0,
-                              mb: 1,
-                              alignItems: "flex-start",
-                            }}
-                          >
-                            <ListItemText
-                              primary={
-                                <Typography
-                                  variant="body1"
-                                  sx={{ fontSize: "1.1rem" }}
-                                >
-                                  {item}
-                                </Typography>
-                              }
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                  </Grid>
-                </Grid>
-
-                <Box
-                  sx={{
-                    mt: 4,
-                    p: 4,
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    borderRadius: 2,
-                    boxShadow: "0 4px 12px rgba(0, 121, 107, 0.1)",
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: 600,
-                      mb: 2,
-                      color: "#00796b",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <Healing color="inherit" /> Медицинская реабилитация
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    paragraph
-                    sx={{ fontSize: "1.1rem" }}
-                  >
-                    Отделение специализируется на медицинской реабилитации
-                    пациентов с заболеваниями опорно-двигательной системы и
-                    периферической нервной системы. На сегодняшний день мы
-                    используем самое современное физиотерапевтическое
-                    оборудование для скорейшего выздоровления наших пациентов.
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: 3,
-                    }}
-                  >
-                    <Chip
-                      label="Круглогодичное лечение в благоприятных условиях"
-                      sx={{
-                        backgroundColor: "#b2dfdb",
-                        color: "#00796b",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        p: 2,
-                        height: "auto",
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </Paper>
-
+            <Description />
             {/* Услуги */}
             <Box sx={{ mt: 8 }}>
               <Typography
@@ -386,7 +156,7 @@ function App() {
               </Typography>
 
               <Grid container spacing={4}>
-                {servicesCategories.map((category, index) => (
+                {SERVICES.map((category, index) => (
                   <Grid
                     item
                     xs={12}
@@ -468,9 +238,9 @@ function App() {
                                     <Box
                                       sx={{ mr: 1.5, color: "primary.main" }}
                                     >
-                                      {serviceIcons[service.split(" (")[0]] || (
-                                        <MedicalServices fontSize="small" />
-                                      )}
+                                      {SERVICE_ICONS[
+                                        service.split(" (")[0]
+                                      ] || <MedicalServices fontSize="small" />}
                                     </Box>
                                     {service}
                                   </Box>
@@ -485,7 +255,6 @@ function App() {
                 ))}
               </Grid>
             </Box>
-
             {/* Как записаться? */}
             <Paper
               elevation={0}
@@ -540,7 +309,7 @@ function App() {
                   {
                     text: "Позвоните в регистратуру",
                     icon: "📞",
-                    details: "Телефон: 8 (423-51) 2-05-61",
+                    details: "Телефон: 8 (42376) 9-44-78",
                   },
                   {
                     text: "Подготовьте документы",
@@ -627,7 +396,7 @@ function App() {
                     fontWeight: 500,
                   }}
                 >
-                  Телефон регистратуры: 8 (423-51) 2-05-61
+                  Телефон регистратуры: 8 (42376) 9-44-78
                 </Typography>
               </Box>
             </Paper>
@@ -701,25 +470,26 @@ function App() {
                       gap: 1,
                     }}
                   >
-                    <MedicalServices sx={{ color: "#ff0707" }} /> Комплексное
-                    восстановительное лечение
+                    <MedicalServices sx={{ color: "#ff0707" }} /> Лечебные
+                    факторы
                   </Typography>
                   <Typography
                     variant="body1"
                     paragraph
                     sx={{ fontSize: "1.1rem" }}
                   >
-                    Больница проводит комплексное восстановительное лечение
-                    пациентов с:
+                    Основным лечебным фактором является природная углекислая
+                    гидрокарбонатная кальциевая вода, содержащая железо и
+                    кремниевую кислоту. Применяется для питьевого лечения:
                   </Typography>
                   <List sx={{ listStyleType: "disc", pl: 4 }}>
                     {[
-                      "Остеохондрозом различных отделов позвоночника",
-                      "Артрозами крупных суставов",
-                      "Заболеваниями периферической нервной системы",
-                      "Заболеваниями сердечно-сосудистой системы в компенсированной форме",
-                      "Последствиями травм опорно-двигательного аппарата",
-                      "Хроническими болевыми синдромами",
+                      "Хронических гастритов с нормальной и повышенной секреторной функцией желудка",
+                      "Хронических заболеваний кишечника, печени, желчевыводящих путей",
+                      "Мочекаменной болезни и заболеваний мочевыводящих путей",
+                      "Хронических панкреатитов",
+                      "Язвенной болезни желудка и двенадцатиперстной кишки",
+                      "Заболеваний, связанных с нарушением обмена веществ",
                     ].map((item, index) => (
                       <ListItem
                         key={index}
@@ -746,7 +516,7 @@ function App() {
   );
 }
 
-export default App;
+export default Evgenevskoe;
 
 // Стили
 const Wrapper = styled.div`
