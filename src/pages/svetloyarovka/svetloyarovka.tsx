@@ -33,6 +33,8 @@ import {
   Vaccines,
   SelfImprovement,
 } from "@mui/icons-material";
+import React from "react";
+import { placemarks } from "./placemark.static";
 
 // Фикс для иконок маркеров
 delete L.Icon.Default.prototype._getIconUrl;
@@ -105,12 +107,6 @@ function Svetloyarovka() {
     controls: ["zoomControl", "fullscreenControl"],
   };
 
-  const marker = {
-    id: 1,
-    coordinates: [44.169335, 132.538051] as [number, number],
-    name: "Краевая больница",
-  };
-
   return (
     <Container>
       <Helper>
@@ -144,7 +140,7 @@ function Svetloyarovka() {
                   defaultState={defaultState}
                   modules={["control.ZoomControl", "control.FullscreenControl"]}
                 >
-                  <PopupWithImages marker={marker} />
+                  <PopupWithImages placemarks={placemarks} />
                 </Map>
               </YMaps>
             </MapWrapper>

@@ -35,6 +35,7 @@ import {
 } from "@mui/icons-material";
 import React from "react";
 import { Description } from "./description";
+import { placemarks } from "./placemark.static";
 
 // Фикс для иконок маркеров
 delete L.Icon.Default.prototype._getIconUrl;
@@ -90,15 +91,9 @@ const SERVICES = [
 
 function Evgenevskoe() {
   const defaultState = {
-    center: [43.57579609151811, 134.65430745727997],
+    center: [43.54579609151811, 134.65430745727997],
     zoom: 13,
     controls: ["zoomControl", "fullscreenControl"],
-  };
-
-  const marker = {
-    id: 1,
-    coordinates: [43.576225, 134.653787] as [number, number],
-    name: "Краевая больница",
   };
 
   return (
@@ -134,7 +129,7 @@ function Evgenevskoe() {
                   defaultState={defaultState}
                   modules={["control.ZoomControl", "control.FullscreenControl"]}
                 >
-                  <PopupWithImages marker={marker} />
+                  <PopupWithImages placemarks={placemarks} />
                 </Map>
               </YMaps>
             </MapWrapper>

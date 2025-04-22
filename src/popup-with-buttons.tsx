@@ -1,8 +1,8 @@
 import { Placemark } from "@pbe/react-yandex-maps";
 import { renderToString } from "react-dom/server";
-import React, { useState } from "react";
+import React from "react";
 
-const PopupContent = () => {
+const PopupContent = ({ img, name, description }) => {
   return (
     <div
       style={{
@@ -14,39 +14,44 @@ const PopupContent = () => {
       }}
     >
       <img
-        src="https://example.com/waves.png"
-        alt="waves"
+        src={img}
+        alt={name}
         style={{ width: "100%", borderRadius: "4px" }}
       />
       <div style={{ marginTop: "10px" }}>
-        <h3 style={{ margin: "0 0 5px 0" }}>Title of that pop up</h3>
-        <p style={{ margin: "0 0 10px 0" }}>
-          Some useful information about a place. You can add whatever you want.
-        </p>
+        <h3 style={{ margin: "0 0 5px 0" }}>{name}</h3>
+        <p style={{ margin: "0 0 10px 0" }}>{description}</p>
       </div>
     </div>
   );
 };
 
-export const PopupWithImages = ({ marker }) => {
-  const [activeMarker, setActiveMarker] = useState<boolean | null>(null);
-  const [popupPosition, setPopupPosition] = useState<[number, number] | null>(
-    null
-  );
-
+export const PopupWithImages = ({ marker, placemarks }: any) => {
   return (
     <>
-      <Placemark
-        key={marker.id}
-        geometry={marker.coordinates}
-        properties={{
-          balloonContent: renderToString(<PopupContent />),
-        }}
-        options={{
-          preset: "islands#redMedicalIcon",
-          hideIconOnBalloonOpen: false,
-        }}
-      />
+      {marker && (
+        <Placemark
+          key={marker.id}
+          geometry={marker.coordinates}
+          options={{
+            preset: "islands#redMedicalIcon",
+            hideIconOnBalloonOpen: false,
+          }}
+        />
+      )}
+      {placemarks?.map((x) => {
+        return (
+          <Placemark
+            key={x.id}
+            geometry={x.coordinates}
+            options={x.options}
+            modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+            properties={{
+              balloonContent: renderToString(<PopupContent {...x} />),
+            }}
+          />
+        );
+      })}
     </>
   );
 };
