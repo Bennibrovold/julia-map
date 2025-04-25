@@ -115,7 +115,7 @@ function Evgenevskoe() {
                   mb: 2,
                 }}
               >
-                Краевая больница Евгеньевская
+                Краевая больница «Евгеньевская»
               </Typography>
               <Typography variant="h5" color="text.secondary">
                 692456, Приморский край, Ольгинский район, село Щербаковка,
